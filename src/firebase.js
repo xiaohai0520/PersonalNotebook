@@ -46,8 +46,6 @@ export async function getAllNotesByUserId(userId) {
   const querySnapshot = await getDocs(q);
   const notes = [];
   querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc);
     console.log(doc.id, " => ", doc.data());
     notes.push(doc);
   });
