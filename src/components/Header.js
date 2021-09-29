@@ -1,5 +1,5 @@
 import React from "react";
-
+import { getAuth, signOut } from "firebase/auth";
 const Header = () => {
   return (
     <div>
@@ -24,6 +24,11 @@ const Header = () => {
           <li className="nav-item d-none d-sm-inline-block">
             <a href="#" className="nav-link">
               Contact
+            </a>
+          </li>
+          <li className="nav-item d-none d-sm-inline-block">
+            <a href="#" className="nav-link" onClick={() => signOut(getAuth())}>
+              Sign out
             </a>
           </li>
         </ul>

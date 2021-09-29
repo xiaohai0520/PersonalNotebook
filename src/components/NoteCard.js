@@ -1,28 +1,23 @@
 import React from "react";
 import { Card, Row, Col, ProgressBar, Button } from "react-bootstrap";
 
-const NoteCard = () => {
+const NoteCard = (props) => {
+  const { title, description, totalStats, currentStats } = props.note;
+  const now = (currentStats / totalStats) * 100;
+
   return (
     <Card style={{ padding: 15 }}>
       <Row>
         <Col sm={10}>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Text>Description:</Card.Text>
-          <ProgressBar animated now={60.5} label={`${60.5}%`} />
-          <Row style={{ marginTop: 10 }}>
-            <Col>Expire Date:</Col>
-            <Col>Rest Days:</Col>
-          </Row>
+          <Card.Title>{title}</Card.Title>
+          <Card.Text>Target: {description}</Card.Text>
+          <Card.Text>Start Date: </Card.Text>
+          <Card.Text>Expire Date: </Card.Text>
+          <Card.Text>Rest Days: </Card.Text>
+          <ProgressBar animated now={now} label={`${now}%`} />
         </Col>
-        <Col
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-          }}
-        >
-          <Button variant="primary" style={{ marginRight: 5 }}>
+        <Col sm={2}>
+          <Button variant="success" style={{ marginRight: 5 }}>
             Edit
           </Button>
           <Button variant="danger">Delete</Button>

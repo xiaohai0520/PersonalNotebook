@@ -1,6 +1,7 @@
 import React from "react";
-
+import { useAuthState } from "../firebase";
 const Menus = () => {
+  const { user } = useAuthState();
   return (
     <div>
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
@@ -27,7 +28,7 @@ const Menus = () => {
             </div>
             <div className="info">
               <a href="#" className="d-block">
-                ColKid
+                {user.email}
               </a>
             </div>
           </div>
