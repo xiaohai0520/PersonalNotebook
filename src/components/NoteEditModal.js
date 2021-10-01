@@ -1,8 +1,9 @@
 import React from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
-
+import { updateModel } from "../firebase";
+import { NOTES } from "../constants";
 const NoteEditModal = (props) => {
-  const { title, target, currentStats, startDate } = props.note;
+  const { title, target, currentStats, startDate, id } = props.note;
   const startDay = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "2-digit",
@@ -51,7 +52,14 @@ const NoteEditModal = (props) => {
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>
-        <Button onClick={props.onHide}>Submit</Button>
+        <Button
+          onClick={() => {
+            updateModel(NOTES, id, { currentStats: currentStatsValue });
+            props.onHide();
+          }}
+        >
+          Submit
+        </Button>
       </Modal.Footer>
     </Modal>
   );

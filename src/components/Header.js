@@ -1,29 +1,30 @@
 import React from "react";
 import { getAuth, signOut } from "firebase/auth";
-const Header = () => {
+const Header = (props) => {
+  const { setShowNumber } = props;
   return (
     <div>
       <nav className="main-header navbar navbar-expand navbar-white navbar-light">
         {/* Left navbar links */}
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a
-              className="nav-link"
-              data-widget="pushmenu"
-              href="#"
-              role="button"
-            >
+            <a className="nav-link" data-widget="pushmenu" role="button">
               <i className="fas fa-bars" />
             </a>
           </li>
           <li className="nav-item d-none d-sm-inline-block">
-            <a href="/" className="nav-link">
-              Home
+            <a href="#" className="nav-link" onClick={() => setShowNumber(1)}>
+              Target
             </a>
           </li>
           <li className="nav-item d-none d-sm-inline-block">
-            <a href="/" className="nav-link">
-              Contact
+            <a href="#" className="nav-link" onClick={() => setShowNumber(2)}>
+              Todo
+            </a>
+          </li>
+          <li className="nav-item d-none d-sm-inline-block">
+            <a href="#" className="nav-link" onClick={() => setShowNumber(3)}>
+              Team
             </a>
           </li>
           <li className="nav-item d-none d-sm-inline-block">

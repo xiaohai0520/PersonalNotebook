@@ -10,6 +10,7 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  updateDoc,
 } from "firebase/firestore";
 import key from "./key";
 export const firebaseApp = initializeApp(key);
@@ -39,11 +40,6 @@ export function getUser() {
   return auth.currentUser;
 }
 
-export async function addNote(noteModel) {
-  const docRef = await addDoc(collection(db, "notes"), noteModel);
-  console.log(docRef.id);
-}
-
 export async function getAllNotesByUserId(userId) {
   const q = query(collection(db, "notes"), where("userId", "==", userId));
   const querySnapshot = await getDocs(q);
@@ -61,6 +57,17 @@ export const getNotesByUserIdQuery = query(
   where("userId", "==", userId)
 );
 
-export async function deleteNote(noteId) {
-  await deleteDoc(doc(db, "notes", noteId));
+// hook for firebase
+export async function addModel(collectionName, model) {
+  const docRef = await addDoc(collection(db, collectionName), model);
+  console.log(docRef.id);
+}
+
+export async function deleteModel(collectionName, id) {
+  await deleteDoc(doc(db, collectionName, id));
+}
+
+export async function updateModel(collectionName, id, updatePartModel) {
+  const docRef = doc(db, collectionName, id);
+  await updateDoc(docRef, updatePartModel);
 }

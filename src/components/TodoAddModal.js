@@ -2,21 +2,19 @@ import React from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import { addModel } from "../firebase";
 import { auth } from "../firebase";
-import { NOTES } from "../constants";
+import { TODOS } from "../constants";
 
-const NoteAddModal = (props) => {
-  const [titleContent, setTitleContent] = React.useState("");
-  const [targetValue, setTargetValue] = React.useState("");
+const TodoAddModal = (props) => {
+  const [todoThing, setTodoThing] = React.useState("");
+
   const userId = auth.currentUser ? auth.currentUser.uid : "";
-  const submit = (title, target) => {
-    const noteModel = {
-      title,
-      target,
-      currentStats: 0,
-      startDate: new Date(),
+  const submit = (todoThing) => {
+    const todoModel = {
+      todoThing,
+      timestamp: new Date(),
       userId: userId,
     };
-    addModel(NOTES, noteModel);
+    addModel(TODOS, todoModel);
   };
   return (
     <Modal
@@ -26,35 +24,31 @@ const NoteAddModal = (props) => {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Note Add</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Todo Add</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridEmail">
-              <Form.Label>Title</Form.Label>
-              <Form.Control onChange={(e) => setTitleContent(e.target.value)} />
+              <Form.Label>Todo</Form.Label>
+              <Form.Control onChange={(e) => setTodoThing(e.target.value)} />
             </Form.Group>
           </Row>
-          <Form.Group className="mb-3" controlId="formGridAddress2">
-            <Form.Label>Target</Form.Label>
-            <Form.Control onChange={(e) => setTargetValue(e.target.value)} />
-          </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>
         <Button
           onClick={() => {
-            submit(titleContent, targetValue);
+            submit(todoThing);
             props.onHide();
           }}
         >
-          Submit
+          Add
         </Button>
       </Modal.Footer>
     </Modal>
   );
 };
 
-export default NoteAddModal;
+export default TodoAddModal;

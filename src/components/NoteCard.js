@@ -1,7 +1,9 @@
 import React from "react";
 import { Card, Row, Col, ProgressBar, Button } from "react-bootstrap";
 import NoteEditModal from "./NoteEditModal";
-import { deleteNote } from "../firebase";
+import { deleteModel } from "../firebase";
+import { NOTES } from "../constants";
+
 const NoteCard = (props) => {
   const { title, target, currentStats, startDate, id } = props.note;
   const now = (currentStats / target) * 100;
@@ -50,7 +52,7 @@ const NoteCard = (props) => {
             >
               Edit
             </Button>
-            <Button variant="danger" onClick={() => deleteNote(id)}>
+            <Button variant="danger" onClick={() => deleteModel(NOTES, id)}>
               Delete
             </Button>
           </Col>
