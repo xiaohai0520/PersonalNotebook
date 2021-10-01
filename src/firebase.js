@@ -8,6 +8,8 @@ import {
   query,
   where,
   getDocs,
+  deleteDoc,
+  doc,
 } from "firebase/firestore";
 import key from "./key";
 export const firebaseApp = initializeApp(key);
@@ -15,6 +17,7 @@ export const firebaseApp = initializeApp(key);
 export const AuthContext = createContext();
 export const db = getFirestore();
 export const auth = getAuth();
+export const userId = auth.currentUser ? auth.currentUser.uid : "";
 
 export const AuthContextProvider = (props) => {
   const [user, setUser] = useState();
@@ -37,7 +40,7 @@ export function getUser() {
 }
 
 export async function addNote(noteModel) {
-  const docRef = await addDoc(collection(db, "note"), noteModel);
+  const docRef = await addDoc(collection(db, "notes"), noteModel);
   console.log(docRef.id);
 }
 
@@ -51,4 +54,13 @@ export async function getAllNotesByUserId(userId) {
   });
   console.log("get all notes for ", userId, notes);
   return notes;
+}
+
+export const getNotesByUserIdQuery = query(
+  collection(db, "notes"),
+  where("userId", "==", userId)
+);
+
+export async function deleteNote(noteId) {
+  await deleteDoc(doc(db, "notes", noteId));
 }

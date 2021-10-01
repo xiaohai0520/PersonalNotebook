@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Container, Col } from "react-bootstrap";
 import NoteCard from "./NoteCard";
 import { AddNoteButton } from "./AddNoteButton";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { onSnapshot, collection, where, query } from "firebase/firestore";
 import { db, auth } from "../firebase";
+import NoteAddModal from "./NoteAddModal";
 
 const Dashboard = () => {
   const [notes, setNotes] = useState([]);
-
+  const [modalShow, setModalShow] = React.useState(false);
   const userId = auth.currentUser ? auth.currentUser.uid : "";
   const q = query(collection(db, "notes"), where("userId", "==", userId));
-
   useEffect(() => {
     const notesListener = onSnapshot(q, (querySnapshot) => {
       const notes = [];
@@ -30,7 +30,8 @@ const Dashboard = () => {
 
         <div className="content">
           <Container>
-            <AddNoteButton />
+            <AddNoteButton setModalShow={setModalShow} />
+            <NoteAddModal show={modalShow} onHide={() => setModalShow(false)} />
             <Col>
               {notes.map((note) => (
                 <NoteCard note={note} />

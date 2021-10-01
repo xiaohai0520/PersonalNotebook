@@ -39,10 +39,6 @@ function App() {
   return (
     <AuthContextProvider>
       <Router>
-        {/* <div>
-          <Link to="/">Home</Link> | <Link to="/login">Login</Link> |{" "}
-          <Link to="/signup">SignUp</Link>
-        </div> */}
         <AuthenticatedRoute exact path="/" component={Home} />
         <UnauthenticatedRoute exact path="/signup" component={SignUp} />
         <UnauthenticatedRoute exact path="/login" component={Login} />

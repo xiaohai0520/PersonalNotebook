@@ -1,14 +1,13 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { addNote } from "../firebase";
 
-export const AddNoteButton = () => {
-  const handleAddNote = () => addNote({ title: "test" });
+export const AddNoteButton = (props) => {
+  const { setModalShow } = props;
   return (
     <Button
       variant="secondary"
       style={{ paddingInline: 30, margin: 15 }}
-      onClick={handleAddNote}
+      onClick={() => setModalShow(true)}
     >
       +
     </Button>

@@ -6,7 +6,7 @@ const Menus = () => {
     <div>
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
         {/* Brand Logo */}
-        <a href="index3.html" className="brand-link">
+        <a href="/" className="brand-link">
           <img
             src="dist/img/AdminLTELogo.png"
             alt="AdminLTE Logo"
@@ -27,7 +27,7 @@ const Menus = () => {
               />
             </div>
             <div className="info">
-              <a href="#" className="d-block">
+              <a href="/" className="d-block">
                 {user.email}
               </a>
             </div>

@@ -1,7 +1,16 @@
-import { Modal, Button, FloatingLabel, Form, Row, Col } from "react-bootstrap";
+import React from "react";
+import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 
 const NoteEditModal = (props) => {
-  const { title, description, totalStats, currentStats } = props.note;
+  const { title, target, currentStats, startDate } = props.note;
+  const startDay = new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(startDate.seconds * 1000);
+
+  const [currentStatsValue, setCurrentStatsValue] =
+    React.useState(currentStats);
   return (
     <Modal
       {...props}
@@ -17,23 +26,26 @@ const NoteEditModal = (props) => {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridEmail">
               <Form.Label>Title</Form.Label>
-              <Form.Control placeholder={title} />
+              <Form.Control placeholder={title} readOnly />
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridPassword">
               <Form.Label>Start Date</Form.Label>
-              <Form.Control placeholder="2021/09/22" />
+              <Form.Control placeholder={startDay} readOnly />
             </Form.Group>
           </Row>
 
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Target</Form.Label>
-            <Form.Control placeholder={totalStats} />
+            <Form.Control placeholder={target} readOnly />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formGridAddress2">
             <Form.Label>Current</Form.Label>
-            <Form.Control placeholder={currentStats} />
+            <Form.Control
+              value={currentStatsValue}
+              onChange={(e) => setCurrentStatsValue(e.target.value)}
+            />
           </Form.Group>
         </Form>
       </Modal.Body>

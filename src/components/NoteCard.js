@@ -1,12 +1,18 @@
 import React from "react";
 import { Card, Row, Col, ProgressBar, Button } from "react-bootstrap";
 import NoteEditModal from "./NoteEditModal";
-
+import { deleteNote } from "../firebase";
 const NoteCard = (props) => {
-  const { title, description, totalStats, currentStats } = props.note;
-  const now = (currentStats / totalStats) * 100;
+  const { title, target, currentStats, startDate, id } = props.note;
+  const now = (currentStats / target) * 100;
   const [modalShow, setModalShow] = React.useState(false);
+  console.log(startDate);
 
+  const startDay = new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(startDate.seconds * 1000);
   return (
     <React.Fragment>
       <Card style={{ padding: 15 }}>
@@ -18,11 +24,11 @@ const NoteCard = (props) => {
                 <Col>
                   {" "}
                   <Card.Text>
-                    Progress: {currentStats}/{totalStats}{" "}
+                    Progress: {currentStats}/{target}{" "}
                   </Card.Text>
                 </Col>
                 <Col>
-                  <Card.Text>Start Date: </Card.Text>
+                  <Card.Text>Start Date: {startDay} </Card.Text>
                 </Col>
                 <Col>
                   <Card.Text>Used Days: </Card.Text>
@@ -44,7 +50,9 @@ const NoteCard = (props) => {
             >
               Edit
             </Button>
-            <Button variant="danger">Delete</Button>
+            <Button variant="danger" onClick={() => deleteNote(id)}>
+              Delete
+            </Button>
           </Col>
         </Row>
       </Card>
