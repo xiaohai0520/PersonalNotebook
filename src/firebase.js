@@ -11,6 +11,7 @@ import {
   deleteDoc,
   doc,
   updateDoc,
+  setDoc,
 } from "firebase/firestore";
 import key from "./key";
 export const firebaseApp = initializeApp(key);
@@ -70,4 +71,8 @@ export async function deleteModel(collectionName, id) {
 export async function updateModel(collectionName, id, updatePartModel) {
   const docRef = doc(db, collectionName, id);
   await updateDoc(docRef, updatePartModel);
+}
+
+export async function setModel(collectionName, id, model) {
+  await setDoc(doc(db, collectionName, id), model);
 }

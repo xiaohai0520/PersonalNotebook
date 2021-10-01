@@ -1,9 +1,34 @@
-import React from "react";
-import { useAuthState } from "../firebase";
+import React, { useState, useEffect } from "react";
+// import { useAuthState } from "../firebase";
+import ProfileEditModal from "./ProfileEditModal";
+import { db, auth } from "../firebase";
+import { doc, onSnapshot } from "firebase/firestore";
+import { USERS } from "../constants";
+
 const Menus = () => {
-  const { user } = useAuthState();
+  // const { user } = useAuthState();
+  const [modalShow, setModalShow] = useState(false);
+  const userId = auth.currentUser ? auth.currentUser.uid : "";
+  const [userProfile, setUserProfile] = useState({ userName: "Anonymous" });
+
+  useEffect(() => {
+    const userListener = onSnapshot(doc(db, USERS, userId), (doc) => {
+      if (doc.data()) {
+        setUserProfile(doc.data());
+      }
+    });
+    return () => userListener();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
+      <ProfileEditModal
+        userName={userProfile.userName}
+        userId={userId}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
       <aside className="main-sidebar sidebar-dark-primary elevation-4">
         {/* Brand Logo */}
         <a href="/" className="brand-link">
@@ -27,8 +52,12 @@ const Menus = () => {
               />
             </div>
             <div className="info">
-              <a href="/" className="d-block">
-                {user.email}
+              <a
+                href="#"
+                className="d-block"
+                onClick={() => setModalShow(true)}
+              >
+                {userProfile.userName}
               </a>
             </div>
           </div>
